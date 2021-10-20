@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  gateway:
+    container_name: gateway
+    build:
+      context: ./server/gateway
+      target: development
+    volumes:
+      - ./server/gateway:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5000:5000
+    command: npm run start:dev
+    env_file:
+      - ./server/gateway/.env
+    depends_on:
+      - redis
+
+  users:
+    container_name: users
+    build:
+      context: ./server/services/users
+      target: development
+    volumes:
+      - ./server/services/users:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5001:5001
+    command: npm run start:dev
+    env_file:
+      - ./server/services/users/.env
+    depends_on:
+      - redis
+      - usersdb
+
+  usersdb:
+    image: mongo:latest
+    container_name: usersdb
+    volumes:
+      - ./database:/data/db
+    ports:
+      - 27017:27017
+    restart: always
+
+  redis:
+    container_name: redis
+    image: redis:5
+    ports:
+      - 6379:6379
