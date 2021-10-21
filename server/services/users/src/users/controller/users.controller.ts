@@ -13,8 +13,6 @@ export class UsersController {
   async test(data: number) {
     console.log('hit users service', `data is ${data}`);
 
-    const test = await this.client.send('second', 'hello mail service');
-    console.log(test);
-    return test;
+    return this.client.send('second', 'hello mail service');
   }
 }

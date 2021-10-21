@@ -11,6 +11,8 @@ import { UsersService } from './service/users.service';
         transport: Transport.REDIS,
         options: {
           port: 5001,
+          host: 'mail',
+          url: 'redis://redis:6379',
         },
       },
     ]),

@@ -10,7 +10,7 @@ services:
       - ./server/gateway:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 5000:5000
+      - '5000:5000'
     command: npm run start:dev
     env_file:
       - ./server/gateway/.env
@@ -19,6 +19,7 @@ services:
 
   users:
     container_name: users
+    hostname: users
     build:
       context: ./server/services/users
       target: development
@@ -26,16 +27,19 @@ services:
       - ./server/services/users:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 5002:5002
+      - '5002:5002'
     command: npm run start:dev
     env_file:
       - ./server/services/users/.env
     depends_on:
       - redis
       - usersdb
+    links:
+      - redis
 
   mail:
     container_name: mail
+    hostname: mail
     build:
       context: ./server/services/mail
       target: development
@@ -43,11 +47,13 @@ services:
       - ./server/services/mail:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 5001:5001
+      - '5001:5001'
     command: npm run start:dev
     env_file:
       - ./server/services/mail/.env
     depends_on:
+      - redis
+    links:
       - redis
 
   usersdb:
@@ -61,6 +67,7 @@ services:
 
   redis:
     container_name: redis
+
     image: redis:5
     ports:
       - 6379:6379
