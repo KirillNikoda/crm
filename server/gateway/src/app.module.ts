@@ -9,7 +9,7 @@ import { AppService } from './app.service';
       {
         name: 'USERS_SERVICE',
         transport: Transport.REDIS,
-        options: { url: 'redis://localhost:6379', port: 5002 },
+        options: { url: 'redis://redis:6379', port: 5002, host: 'users' },
       },
     ]),
   ],
