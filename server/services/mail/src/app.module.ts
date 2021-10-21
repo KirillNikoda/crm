@@ -7,9 +7,11 @@ import { AppService } from './app.service';
   imports: [
     ClientsModule.register([
       {
-        name: 'USERS_SERVICE',
+        name: 'MAIL_SERVICE',
         transport: Transport.REDIS,
-        options: { url: 'redis://localhost:6379', port: 5002 },
+        options: {
+          port: 5002,
+        },
       },
     ]),
   ],

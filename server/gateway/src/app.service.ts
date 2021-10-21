@@ -3,11 +3,10 @@ import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class AppService {
-  constructor(@Inject('GATEWAY') private client: ClientProxy) {
-    console.log(client);
-    console.log(process.env.NODE_ENV);
-  }
-  getHello(): string {
-    return 'Superior update';
+  constructor(@Inject('USERS_SERVICE') private client: ClientProxy) {}
+  async getHello() {
+    const res = await this.client.send('test', 123);
+
+    return res;
   }
 }

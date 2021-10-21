@@ -26,13 +26,29 @@ services:
       - ./server/services/users:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 5001:5001
+      - 5002:5002
     command: npm run start:dev
     env_file:
       - ./server/services/users/.env
     depends_on:
       - redis
       - usersdb
+
+  mail:
+    container_name: mail
+    build:
+      context: ./server/services/mail
+      target: development
+    volumes:
+      - ./server/services/mail:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5001:5001
+    command: npm run start:dev
+    env_file:
+      - ./server/services/mail/.env
+    depends_on:
+      - redis
 
   usersdb:
     image: mongo:latest
