@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  client:
+    container_name: client
+    build:
+      context: ./client
+    command: npm run start
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '4200:4200'
+
   gateway:
     container_name: gateway
     build:
@@ -34,8 +45,6 @@ services:
     depends_on:
       - redis
       - usersdb
-    links:
-      - redis
 
   mail:
     container_name: mail
@@ -53,17 +62,6 @@ services:
       - ./server/services/mail/.env
     depends_on:
       - redis
-    links:
-      - redis
-
-  usersdb:
-    image: mongo:latest
-    container_name: usersdb
-    volumes:
-      - ./database:/data/db
-    ports:
-      - 27017:27017
-    restart: always
 
   redis:
     container_name: redis
