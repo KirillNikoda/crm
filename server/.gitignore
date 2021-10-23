@@ -1,13 +1,13 @@
 # compiled output
 /dist
 /node_modules
+.env
 
 # db
 /prisma/migrations
-/prisma/dev.db
-/prisma/dev.db-journal
 
-.env
+
+
 
 # Logs
 logs

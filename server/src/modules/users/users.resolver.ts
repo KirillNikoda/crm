@@ -1,28 +1,31 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateUserDTO } from 'src/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateUserInput } from './dto/create-user.input';
 import { UsersService } from './service/users.service';
+import { User } from './user.entity';
 
-@Resolver('User')
+@Resolver((of) => User)
 export class UsersResolvers {
   constructor(private usersService: UsersService) {}
 
-  @Query('users')
-  async users() {
+  @Query((returns) => [User])
+  async users(): Promise<User[]> {
     return this.usersService.getAllUsers();
   }
 
-  @Query('user')
-  async user(@Args('id') id: string) {
+  @Query((returns) => User)
+  async user(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return this.usersService.getUser(id);
   }
 
-  @Mutation('createUser')
-  async create(@Args('input') createUserDTO: CreateUserDTO) {
-    return this.usersService.createUser(createUserDTO);
+  @Mutation((returns) => User)
+  async createUser(
+    @Args('input') createUserInput: CreateUserInput
+  ): Promise<User> {
+    return this.usersService.createUser(createUserInput);
   }
 
-  @Mutation('deleteUser')
-  async delete(@Args('id') id: string) {
+  @Mutation((returns) => User)
+  async deleteUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.deleteUser(id);
   }
 }
