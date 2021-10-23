@@ -22,5 +22,7 @@ export class UsersResolvers {
   }
 
   @Mutation('deleteUser')
-  async delete(@Args('id') id: string) {}
+  async delete(@Args('id') id: string) {
+    return this.usersService.deleteUser(id);
+  }
 }
