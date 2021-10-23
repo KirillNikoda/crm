@@ -1,10 +1,10 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateUserInput } from './dto/create-user.input';
-import { UsersService } from './service/users.service';
-import { User } from './user.entity';
+import { CreateUserInput } from '../dto/create-user.input';
+import { UsersService } from '../service/users.service';
+import { User } from '../entities/user.entity';
 
 @Resolver((of) => User)
-export class UsersResolvers {
+export class UsersResolver {
   constructor(private usersService: UsersService) {}
 
   @Query((returns) => [User])
