@@ -5,10 +5,11 @@
 type User {
   id: Int!
   email: String!
+  password: String!
   name: String
 }
 
-type Owner {
+type Auth {
   """Example field (placeholder)"""
   exampleField: Int!
 }
@@ -16,16 +17,14 @@ type Owner {
 type Query {
   users: [User!]!
   user(id: Int!): User!
-  owners: [Owner!]!
-  owner(id: Int!): Owner!
 }
 
 type Mutation {
   createUser(input: CreateUserInput!): User!
-  deleteUser(id: Int!): User!
-  createOwner(createOwnerInput: CreateOwnerInput!): Owner!
-  updateOwner(updateOwnerInput: UpdateOwnerInput!): Owner!
-  removeOwner(id: Int!): Owner!
+  removeUser(id: Int!): User!
+  register(registerUserInput: RegisterUserInput!): Auth!
+  login(loginUserInput: LoginUserInput!): Auth!
+  logout: Auth!
 }
 
 input CreateUserInput {
@@ -34,13 +33,14 @@ input CreateUserInput {
   name: String
 }
 
-input CreateOwnerInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input RegisterUserInput {
+  email: String!
+  password: String!
+  name: String
 }
 
-input UpdateOwnerInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input LoginUserInput {
+  email: String
+  password: String
+  name: String
 }
