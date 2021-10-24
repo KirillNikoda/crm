@@ -24,6 +24,11 @@ export class AuthService {
       throw new BadRequestException('Email is already taken');
     }
 
+    registerUserInput.password = await bcrypt.hash(
+      registerUserInput.password,
+      10
+    );
+
     const createdUser = await this.usersService.createUser(registerUserInput);
 
     return createdUser;
