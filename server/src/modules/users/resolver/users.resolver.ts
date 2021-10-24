@@ -9,12 +9,12 @@ export class UsersResolver {
 
   @Query((returns) => [User], { name: 'users' })
   async findAll(): Promise<User[]> {
-    return this.usersService.getAllUsers();
+    return this.usersService.findAll();
   }
 
   @Query((returns) => User, { name: 'user' })
   async findOne(@Args('id', { type: () => Int }) id: number): Promise<User> {
-    return this.usersService.getUser(id);
+    return this.usersService.findOne(id);
   }
 
   @Mutation((returns) => User)
@@ -26,6 +26,6 @@ export class UsersResolver {
 
   @Mutation((returns) => User)
   async removeUser(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.deleteUser(id);
+    return this.usersService.removeUser(id);
   }
 }
