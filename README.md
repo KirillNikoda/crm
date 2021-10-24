@@ -8,7 +8,7 @@ Stack:
       - NgRx
       - GraphQL(angular-apollo)
       
- - Backend
+  - Backend:
       - TypeScript
       - Node.js
       - Nest.js
