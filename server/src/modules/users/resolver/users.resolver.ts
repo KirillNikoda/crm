@@ -7,13 +7,13 @@ import { User } from '../entities/user.entity';
 export class UsersResolver {
   constructor(private usersService: UsersService) {}
 
-  @Query((returns) => [User])
-  async users(): Promise<User[]> {
+  @Query((returns) => [User], { name: 'users' })
+  async findAll(): Promise<User[]> {
     return this.usersService.getAllUsers();
   }
 
-  @Query((returns) => User)
-  async user(@Args('id', { type: () => Int }) id: number): Promise<User> {
+  @Query((returns) => User, { name: 'user' })
+  async findOne(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return this.usersService.getUser(id);
   }
 
@@ -25,7 +25,7 @@ export class UsersResolver {
   }
 
   @Mutation((returns) => User)
-  async deleteUser(@Args('id', { type: () => Int }) id: number) {
+  async removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.deleteUser(id);
   }
 }
